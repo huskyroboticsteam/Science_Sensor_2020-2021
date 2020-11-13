@@ -66,7 +66,7 @@ void init_motor(){
 	pid_target = 0;
 	#endif
 	set_target_velocity(DEFAULT_MOTOR_VELOCITY);
-	init_encoder();
+	init_encoders();
 }
 
 /*Sets the motor power directly without limit switch checking or updating variables
@@ -259,16 +259,6 @@ int32_t get_target_position(){
 	return motor_target_pos;
 }
 
-/*Gets the target velocity for the motor*/
-int32_t get_target_velocity(){
-	return motor_target_vel;
-}
-
-/*Gets the current motor velocity*/
-int16_t get_motor_velocity(){
-	return get_encoder_velocity();
-}
-
 void index_motor(){
 	motor_mode |= MOTOR_MODE_INDEX;
 	if(motor_target_vel == 0){
@@ -285,7 +275,7 @@ int32_t last = 0;
 void motor_control_tick(){
 	if(!(motor_mode & MOTOR_MODE_PID)){ //If the PID is disabled, simply unset the PID due flag
 		PID_due = 0;
-		int32_t t = get_encoder_ticks();
+		int32_t t = get_encoder_ticks(0);
 		if(t != last){
 			tprintf("%l\n", t);
 			last = t;
@@ -343,7 +333,7 @@ void motor_control_tick(){
 		}
 		#endif
 		/*Position PID*/
-		int32_t pos = get_encoder_ticks();
+		int32_t pos = get_encoder_ticks(0);
 		#ifndef DUAL_PID
 		if(pos < pid_target - 128 || pos > pid_target + 128){ /*If there is a large error, the PID is out of lock*/
 		//	tprintf("Assinging PID target %l, %l\n", pid_target, pos);
@@ -394,7 +384,7 @@ void motor_control_tick(){
 		}
 	}
 	if(limit_sw & 2){
-		reset_encoder();
+		reset_encoder(0);
 		//motor_max_pos = get_encoder_ticks();
 	/*	if(motor_target_pos > motor_max_pos){
 			motor_target_pos = motor_max_pos;
