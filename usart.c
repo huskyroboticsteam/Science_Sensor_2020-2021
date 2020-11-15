@@ -11,17 +11,17 @@ volatile char usart_TX_buf[USART_TX_BUF_SZ];
 volatile char usart_RX_buf[USART_RX_BUF_SZ];
 volatile uint8_t txbp, txend, rxbp;
 
-ISR(USART1_RX_vect){
+ISR(USART0_RX_vect){
 	if(rxbp > USART_RX_BUF_SZ){
 		rxbp = USART_RX_BUF_SZ;
 		return;
 	}
-	usart_RX_buf[rxbp++] = UDR1;
+	usart_RX_buf[rxbp++] = UDR0;
 }
-ISR(USART1_UDRE_vect){
-	UDR1 = usart_TX_buf[txbp++];
+ISR(USART0_UDRE_vect){
+	UDR0 = usart_TX_buf[txbp++];
 	if(txbp >= txend || txbp > USART_TX_BUF_SZ){
-		UCSR1B &= ~(1 << UDRIE1);
+		UCSR0B &= ~(1 << UDRIE1);
 		txbp = txend = 0;
 	}
 }
@@ -36,12 +36,12 @@ Number of bytes recieved
 uint8_t usart_read(char *buf, uint8_t count){
 	uint8_t icfg = UCSR1B;
 	while(rxbp < 1);
-	UCSR1B &= ~(1 << RXCIE1); //Disable USART RX interrupt during operation
+	UCSR0B &= ~(1 << RXCIE1); //Disable USART RX interrupt during operation
 	uint8_t c = min(rxbp, count);
 	memcpy((void*)buf, (void*)usart_RX_buf, c);
 	memmove((void*)usart_RX_buf, (void*)usart_RX_buf + c, USART_RX_BUF_SZ - c);
 	rxbp -= c;
-	UCSR1B = icfg;
+	UCSR0B = icfg;
 	return c;
 }
 
@@ -52,14 +52,14 @@ uint8_t count: How many bytes to write
 */
 void usart_write(char *buf, uint8_t count){
 	volatile uint8_t c;
-	if(txend){UCSR1B |= (1 << UDRIE1);}
+	if(txend){UCSR0B |= (1 << UDRIE1);}
 	while(count){
 		while(txend >= USART_TX_BUF_SZ-1);
 		c = min(USART_TX_BUF_SZ - txend, count);
 		memcpy((void*)usart_TX_buf + txend, buf, c);
 		txend += c;
 		count -= c;
-		UCSR1B |= (1 << UDRIE1);
+		UCSR0B |= (1 << UDRIE1);
 	}
 }
 
@@ -70,15 +70,15 @@ uint16_t baud: The baud rate to use
 void usart_init(uint32_t baud){
 	rxbp = 0;
     txbp = txend = 0;
-	UCSR1A = 0;
-	UBRR1 = ((F_CPU/16L)/baud)-1;
-	UCSR1C = (1<<UCSZ11) | (1<<UCSZ10); //8-bit, 1 stop bit, no parity
-	UCSR1B = (1<<RXEN1) | (1<<TXEN1) | (1<<RXCIE1); //Enable recieve, transmit and interrupts
+	UCSR0A = 0;
+	UBRR0 = ((F_CPU/16L)/baud)-1;
+	UCSR0C = (1<<UCSZ11) | (1<<UCSZ10); //8-bit, 1 stop bit, no parity
+	UCSR0B = (1<<RXEN1) | (1<<TXEN1) | (1<<RXCIE1); //Enable recieve, transmit and interrupts
 }
 
 /*Disables USART*/
 void usart_end(){
-	UCSR1B = 0;
+	UCSR0B = 0;
 }
 
 /*Writes one character to the USART
