@@ -10,6 +10,8 @@ CANMotorUnit.c
 
 CANPacket.c
 
+CANScience.c
+
 dac.c
 
 encoder.c

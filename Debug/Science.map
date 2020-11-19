@@ -240,18 +240,43 @@ Discarded input sections
                 0x00000000       0x42 CANPacket.o
  .text.PackIntIntoDataMSBFirst
                 0x00000000       0x10 CANPacket.o
+ .text.PackShortIntoDataMSBFirst
+                0x00000000        0xc CANPacket.o
  .text.DecodeBytesToIntMSBFirst
                 0x00000000       0xaa CANPacket.o
- .debug_info    0x00000000      0x696 CANPacket.o
+ .debug_info    0x00000000      0x6f2 CANPacket.o
  .debug_abbrev  0x00000000      0x1ef CANPacket.o
  .debug_loc     0x00000000      0x7df CANPacket.o
  .debug_aranges
-                0x00000000       0xa0 CANPacket.o
- .debug_ranges  0x00000000       0xc0 CANPacket.o
- .debug_line    0x00000000      0x33a CANPacket.o
- .debug_str     0x00000000      0x3d6 CANPacket.o
+                0x00000000       0xa8 CANPacket.o
+ .debug_ranges  0x00000000       0xc8 CANPacket.o
+ .debug_line    0x00000000      0x357 CANPacket.o
+ .debug_str     0x00000000      0x3f8 CANPacket.o
  .comment       0x00000000       0x31 CANPacket.o
- .debug_frame   0x00000000      0x178 CANPacket.o
+ .debug_frame   0x00000000      0x188 CANPacket.o
+ .text          0x00000000        0x0 CANScience.o
+ .data          0x00000000        0x0 CANScience.o
+ .bss           0x00000000        0x0 CANScience.o
+ .text.AssembleScienceSensorPullPacket
+                0x00000000        0x6 CANScience.o
+ .text.AssembleScienceMotorControlPacket
+                0x00000000       0x5c CANScience.o
+ .text.AssembleScienceServoPacket
+                0x00000000       0x32 CANScience.o
+ .text.GetScienceMotorPWMFromPacket
+                0x00000000       0x12 CANScience.o
+ .text.GetScienceMotorIDFromPacket
+                0x00000000        0x6 CANScience.o
+ .debug_info    0x00000000      0x3a8 CANScience.o
+ .debug_abbrev  0x00000000      0x123 CANScience.o
+ .debug_loc     0x00000000      0x38d CANScience.o
+ .debug_aranges
+                0x00000000       0x40 CANScience.o
+ .debug_ranges  0x00000000       0x30 CANScience.o
+ .debug_line    0x00000000      0x16f CANScience.o
+ .debug_str     0x00000000      0x2eb CANScience.o
+ .comment       0x00000000       0x31 CANScience.o
+ .debug_frame   0x00000000       0xa8 CANScience.o
  .text          0x00000000        0x0 dac.o
  .data          0x00000000        0x0 dac.o
  .bss           0x00000000        0x0 dac.o
@@ -668,6 +693,7 @@ LOAD adc.o
 LOAD CANCommon.o
 LOAD CANMotorUnit.o
 LOAD CANPacket.o
+LOAD CANScience.o
 LOAD dac.o
 LOAD encoder.o
 LOAD i2c.o
