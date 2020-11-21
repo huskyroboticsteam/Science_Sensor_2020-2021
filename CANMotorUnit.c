@@ -42,7 +42,7 @@ void AssemblePWMDirSetPacket(CANPacket *packetToAssemble,
 
 int32_t GetPWMFromPacket(CANPacket *packet)
 {
-    return DecodeBytesToIntMSBFirst(packet->data, 1, 4);
+    return DecodeBytesToIntMSBFirst(packet->data, 1, 2);
 }
 
 //Returns 2's compliment MSB (0 for stopped or forward, 1 for reverse)

@@ -48,11 +48,3 @@ void externalAREF(){
 		read_ADC(0);
 	}
 }
-
-/*Gets the voltage on the +24V line and returns the results in mV*/
-uint16_t get_voltage(){
-	internalAREF();
-	uint16_t val = read_ADC(VS_PIN);
-	//2.5mV/unit, 16:1 resistor ratio
-	return (val << 5) + (val << 3); //fast multiply by 40
-}

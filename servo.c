@@ -45,7 +45,7 @@ void PCA9685_set_freq(uint16_t freq){
 	uint8_t old_mode = I2C_read(0);
 	I2C_stop();
 	
-	PCA9685_write(PCA9685_MODE1_REG, old_mode & 0x7F | PCA9685_SLEEP_BIT);
+	PCA9685_write(PCA9685_MODE1_REG, (old_mode & 0x7F) | PCA9685_SLEEP_BIT);
 	_delay_ms(2);
 	PCA9685_write(PCA9685_PRESCALE, prescale);
 	PCA9685_write(PCA9685_MODE1_REG, old_mode);
