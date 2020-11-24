@@ -162,6 +162,9 @@
     <Compile Include="encoder.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="handle_can.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="i2c.c">
       <SubType>compile</SubType>
     </Compile>

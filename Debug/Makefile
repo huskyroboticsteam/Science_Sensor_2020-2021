@@ -44,6 +44,7 @@ C_SRCS +=  \
 ../CANScience.c \
 ../dac.c \
 ../encoder.c \
+../handle_can.c \
 ../i2c.c \
 ../led.c \
 ../main.c \
@@ -71,6 +72,7 @@ CANPacket.o \
 CANScience.o \
 dac.o \
 encoder.o \
+handle_can.o \
 i2c.o \
 led.o \
 main.o \
@@ -91,6 +93,7 @@ CANPacket.o \
 CANScience.o \
 dac.o \
 encoder.o \
+handle_can.o \
 i2c.o \
 led.o \
 main.o \
@@ -111,6 +114,7 @@ CANPacket.d \
 CANScience.d \
 dac.d \
 encoder.d \
+handle_can.d \
 i2c.d \
 led.d \
 main.d \
@@ -131,6 +135,7 @@ CANPacket.d \
 CANScience.d \
 dac.d \
 encoder.d \
+handle_can.d \
 i2c.d \
 led.d \
 main.d \
@@ -200,6 +205,13 @@ LINKER_SCRIPT_DEP+=
 	
 
 ./encoder.o: .././encoder.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DCHIP_TYPE=CHIP_TYPE_AT90CANxxx  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../include" -I"../HindsightCAN"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=at90can128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\at90can128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./handle_can.o: .././handle_can.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DCHIP_TYPE=CHIP_TYPE_AT90CANxxx  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../include" -I"../HindsightCAN"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=at90can128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\at90can128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

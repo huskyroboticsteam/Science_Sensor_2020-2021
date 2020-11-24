@@ -24,6 +24,8 @@
 #include "dac.h"
 #include "meow.h"
 
+void handle_CAN_packet(CANPacket *packet);
+
 int main(){
 	DDRD = 1<<4;
 	PORTD = 1<<4;
@@ -53,7 +55,7 @@ int main(){
 		if(PollAndReceiveCANPacket(&packet) == 0){
 			set_LED(LED_CAN, 3);
 			update_LEDS(get_mS()/40);
-			handle_CAN_message(&packet);
+			handle_CAN_packet(&packet);
 			set_LED(LED_CAN, 0);
 		}
 		motor_control_tick();

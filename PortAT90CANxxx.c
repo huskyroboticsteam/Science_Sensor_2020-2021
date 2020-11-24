@@ -217,12 +217,12 @@ int PollAndReceiveCANPacket(CANPacket *receivedPacket)
 uint8_t getLocalDeviceSerial()
 {
     /*Return the DIP switch value*/
-    return get_dip_switch();
+    return devSer;
 }
 uint8_t getLocalDeviceGroup()
 {
     //Definitely board specific.
-    return DEVICE_GROUP_MOTOR_CONTROL; // example value (also used for testing)
+    return devGrp; // example value (also used for testing)
 }
 
 uint8_t getChipType()

@@ -16,6 +16,8 @@ dac.c
 
 encoder.c
 
+handle_can.c
+
 i2c.c
 
 led.c
