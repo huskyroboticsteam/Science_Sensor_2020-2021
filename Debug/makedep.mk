@@ -4,19 +4,19 @@
 
 adc.c
 
-CANCommon.c
-
-CANMotorUnit.c
-
-CANPacket.c
-
-CANScience.c
-
 dac.c
 
 encoder.c
 
 handle_can.c
+
+HindsightCAN\CANCommon.c
+
+HindsightCAN\CANMotorUnit.c
+
+HindsightCAN\CANPacket.c
+
+HindsightCAN\CANScience.c
 
 i2c.c
 

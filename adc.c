@@ -48,3 +48,11 @@ void externalAREF(){
 		read_ADC(0);
 	}
 }
+
+uint16_t read_gas_sensor(){
+	return read_ADC(2);
+}
+
+uint16_t mars_moisture(){
+	return read_ADC(3);
+}

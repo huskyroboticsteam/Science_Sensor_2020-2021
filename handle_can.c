@@ -2,11 +2,13 @@
 #include <servo.h>
 #include <led.h>
 #include <motor.h>
+#include <adc.h>
 #include "CANPacket.h"
 #include "CANScience.h"
 #include "CANCommon.h"
 #include "CANMotorUnit.h"
 #include "CANSerialNumbers.h"
+#include "Port.h"
 
 void handle_telemetry_packet(CANPacket *packet){
 	int32_t sensor_val = 0;
@@ -14,14 +16,17 @@ void handle_telemetry_packet(CANPacket *packet){
 	uint8_t type;
 	switch(type = DecodeTelemetryType(packet)){
 		case CAN_SCIENCE_SENSOR_GAS:
-		//sensor_val = read_gas_sensor();
-		break;
+			sensor_val = read_gas_sensor();
+			break;
 		case CAN_SCIENCE_SENSOR_UV:
-		//sensor_val = read_uv_sensor();
-		break;
+			//sensor_val = read_uv_sensor();
+			break;
+		case CAN_SCIENCE_SENSOR_MOISTURE:
+			sensor_val = mars_moisture();
+			break;
 		case CAN_SCIENCE_SENSOR_AIR_QUALITY:
-		//sensor_val = read_aq_sensor();
-		break;
+			//sensor_val = read_aq_sensor();
+			break;
 	}
 	AssembleTelemetryReportPacket(&new_packet, DEVICE_GROUP_MASTER, DEVICE_SERIAL_JETSON, type, sensor_val);
 	SendCANPacket(&new_packet);

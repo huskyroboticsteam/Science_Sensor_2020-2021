@@ -65,7 +65,7 @@ int WriteSenderSerialAndPacketID(uint8_t *data, uint8_t packetID)
 {
     data[0] = packetID;
     data[1] = getLocalDeviceGroup();
-	data[2] = getLocalDeviceSerial();
+    data[2] = getLocalDeviceSerial();
     return 3;
 }
 

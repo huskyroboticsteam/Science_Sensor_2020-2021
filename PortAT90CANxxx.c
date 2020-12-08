@@ -77,9 +77,9 @@ ISR(CANIT_vect){
 void set_mob_rx_filter(int mob){
 	select_mob(mob);
 	uint16_t RX_mask = 0x3FF; // mask out priority bit, compare on everything else
-	uint16_t RX_tag = 0; //0th MOb is for broadcast packets, all 0s
-	if(mob > 0 && mob <= 2){ //1st und 2nd MOb is for device group broadcasts, match device group and 0 serial
-		RX_tag = devGrp << 6;
+	uint16_t RX_tag = 0x3F; //0th MOb is for broadcast packets, group = 0, serial = 0x3F
+	if(mob > 0 && mob <= 2){ //1st und 2nd MOb is for device group broadcasts, match device group and 0x3F serial
+		RX_tag = (devGrp << 6) | 0x3F;
 	} else if(mob > 2 && mob <= 4){ //2nd and 3rd MOb is for the device specific message. Match the whole ID
 		RX_tag = (devGrp << 6) | devSer;
 	}

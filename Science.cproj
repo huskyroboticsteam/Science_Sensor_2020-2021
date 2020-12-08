@@ -144,18 +144,6 @@
     <Compile Include="adc.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="CANCommon.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="CANMotorUnit.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="CANPacket.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="CANScience.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="dac.c">
       <SubType>compile</SubType>
     </Compile>
@@ -163,6 +151,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="handle_can.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HindsightCAN\CANCommon.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HindsightCAN\CANMotorUnit.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HindsightCAN\CANPacket.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HindsightCAN\CANScience.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="i2c.c">
@@ -198,6 +198,9 @@
     <Compile Include="util.c">
       <SubType>compile</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HindsightCAN" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
