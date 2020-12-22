@@ -41,9 +41,10 @@ int main(){
 	I2C_init(333);
 	cli();
 	set_RGB(H, L, L);
-	play_audio(meow, sizeof(meow));
+	_delay_ms(100);
+	//play_audio(meow, sizeof(meow));
 	set_RGB(L, L, L);
-	dac_write(0);
+	//dac_write(0);
 	PORTD = 0;
 	sei();
 	wdt_enable(WDTO_2S);
@@ -53,10 +54,11 @@ int main(){
 	CANPacket packet;
 	while(1){
 		if(PollAndReceiveCANPacket(&packet) == 0){
-			set_LED(LED_CAN, 3);
-			update_LEDS(get_mS()/40);
+			//set_LED(LED_CAN, 3);
+		//	update_LEDS(get_mS()/40);
 			handle_CAN_packet(&packet);
-			set_LED(LED_CAN, 0);
+			//set_LED(LED_CAN, 0);
+			//update_LEDS(get_mS()/40);
 		}
 		motor_control_tick();
 		wdt_reset();

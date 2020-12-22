@@ -19,7 +19,7 @@ void handle_telemetry_packet(CANPacket *packet){
 			sensor_val = read_gas_sensor();
 			break;
 		case CAN_SCIENCE_SENSOR_UV:
-			//sensor_val = read_uv_sensor();
+			sensor_val = 666;//read_uv_sensor();
 			break;
 		case CAN_SCIENCE_SENSOR_MOISTURE:
 			sensor_val = mars_moisture();
