@@ -47,10 +47,15 @@ int main(){
 	//dac_write(0);
 	PORTD = 0;
 	sei();
-	wdt_enable(WDTO_2S);
+	//wdt_enable(WDTO_2S);
 	InitCAN(DEVICE_GROUP_SCIENCE, get_dip_switch());
 	init_servos();
 	init_motor();
+	/*	DDRE |= 8 | 16 | 32;
+		DDRB |= 8 | 16 | 32;
+		//PORTE = 8;
+		write_PWM(3, 10);
+		while(1);*/
 	CANPacket packet;
 	while(1){
 		if(PollAndReceiveCANPacket(&packet) == 0){

@@ -16,6 +16,10 @@ int32_t last_update[3];
 void init_motor(){
 	DDRE |= (1 << 3) | (1 << 4) | (1 << 5); //set motor pwm pins to outputs
 	DDRB |= (1 << 3) | (1 << 4) | (1 << 5); //set motor direction pins to outputs
+	for(int m = 0;m < 3;m++){ //Set the inital motor powers to 0
+		motor_powers[m] = 0;
+		write_PWM(m + 3, 0);
+	}
 	init_encoders();
 }
 
@@ -64,6 +68,6 @@ void motor_control_tick(){
 		} else {
 			set_motor_direction(motor, 0);
 		}
-		write_PWM(motor, power);
+		write_PWM(motor + 3, power);
 	}
 }
