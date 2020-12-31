@@ -32,7 +32,7 @@ int main(){
 	DDRB = 1<<6;
 	PORTB = 1<<6;
 	PORTA = 0xF0; //Enable DIP switch pullups
-	_delay_ms(250);
+	//_delay_ms(250);
 	DDRG |= 1<<4;
 	PORTB = 0;
 	uint8_t H[3] = {64, 64, 64};
@@ -42,12 +42,12 @@ int main(){
 	cli();
 	set_RGB(H, L, L);
 	_delay_ms(100);
-	//play_audio(meow, sizeof(meow));
+	play_audio(meow, sizeof(meow));
 	set_RGB(L, L, L);
-	//dac_write(0);
+	dac_write(0);
 	PORTD = 0;
 	sei();
-	//wdt_enable(WDTO_2S);
+	wdt_enable(WDTO_2S);
 	InitCAN(DEVICE_GROUP_SCIENCE, get_dip_switch());
 	init_servos();
 	init_motor();
@@ -57,13 +57,13 @@ int main(){
 		write_PWM(3, 10);
 		while(1);*/
 	CANPacket packet;
+	uint8_t count = 0;
 	while(1){
 		if(PollAndReceiveCANPacket(&packet) == 0){
-			//set_LED(LED_CAN, 3);
-		//	update_LEDS(get_mS()/40);
+			set_LED(LED_CAN, 3);
+			update_LEDS(get_mS()/40);
 			handle_CAN_packet(&packet);
-			//set_LED(LED_CAN, 0);
-			//update_LEDS(get_mS()/40);
+			set_LED(LED_CAN, 0);
 		}
 		motor_control_tick();
 		wdt_reset();

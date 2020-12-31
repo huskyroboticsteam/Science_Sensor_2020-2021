@@ -14,6 +14,8 @@ void handle_telemetry_packet(CANPacket *packet){
 	int32_t sensor_val = 0;
 	CANPacket new_packet;
 	uint8_t type;
+	uint8_t target_group = GetSenderDeviceGroupCode(packet);
+	uint8_t target_serial = GetSenderDeviceSerialNumber(packet);
 	switch(type = DecodeTelemetryType(packet)){
 		case CAN_SCIENCE_SENSOR_GAS:
 			sensor_val = read_gas_sensor();
@@ -28,7 +30,7 @@ void handle_telemetry_packet(CANPacket *packet){
 			//sensor_val = read_aq_sensor();
 			break;
 	}
-	AssembleTelemetryReportPacket(&new_packet, DEVICE_GROUP_MASTER, DEVICE_SERIAL_JETSON, type, sensor_val);
+	AssembleTelemetryReportPacket(&new_packet, target_group, target_serial, type, sensor_val);
 	SendCANPacket(&new_packet);
 }
 

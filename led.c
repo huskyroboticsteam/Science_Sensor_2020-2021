@@ -32,8 +32,8 @@ void inline update_LEDS(uint16_t count){
 	int i;
 	uint8_t v;
 	if(!LED_states){
-		PORTG &= ~3;
-		PORTB &= ~(7 | 6);
+		PORTG &= ~(1 << 3);
+		PORTB &= ~(1 << 7 | 1 << 6);
 		return;
 	}
 	for(i = 0;i < 3;i++){
