@@ -42,7 +42,7 @@ int main(){
 	cli();
 	set_RGB(H, L, L);
 	_delay_ms(100);
-	play_audio(meow, sizeof(meow));
+	//play_audio(meow, sizeof(meow));
 	set_RGB(L, L, L);
 	dac_write(0);
 	PORTD = 0;
@@ -66,6 +66,9 @@ int main(){
 			set_LED(LED_CAN, 0);
 		}
 		motor_control_tick();
+		volatile int n = get_encoder_ticks(1);
+		uint8_t a[3]={n / 32, n / 32, n / 32};
+		set_RGB(a, a, a);
 		wdt_reset();
 	}
 }

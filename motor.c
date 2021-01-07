@@ -59,7 +59,7 @@ void motor_control_tick(){
 	for(uint8_t motor = 0;motor < 3;motor++){
 		if(get_mS() - last_update[motor] > MOTOR_SET_TIMEOUT){
 			/*If more than set time has elapsed without an update to this motor, turn it off*/
-			//motor_powers[motor] = 0;
+			motor_powers[motor] = 0;
 		}
 		int16_t power = motor_powers[motor];
 		if(power < 0){

@@ -67,13 +67,13 @@ Discarded input sections
  .text          0x00000000        0x0 dac.o
  .data          0x00000000        0x0 dac.o
  .bss           0x00000000        0x0 dac.o
+ .text.play_audio
+                0x00000000       0x30 dac.o
  .data.sine_table
                 0x00000000       0x10 dac.o
  .text          0x00000000        0x0 encoder.o
  .data          0x00000000        0x0 encoder.o
  .bss           0x00000000        0x0 encoder.o
- .text.get_encoder_ticks
-                0x00000000       0x28 encoder.o
  .text.set_encoder_ticks
                 0x00000000       0x28 encoder.o
  .text.reset_encoder
@@ -211,6 +211,12 @@ Discarded input sections
                 0x00000000       0x5c HindsightCAN/CANScience.o
  .text.AssembleScienceServoPacket
                 0x00000000       0x32 HindsightCAN/CANScience.o
+ .text.AssembleScienceEncoderReportPacket
+                0x00000000       0x5a HindsightCAN/CANScience.o
+ .text.GetScienceEncoderNumberFromPacket
+                0x00000000        0x6 HindsightCAN/CANScience.o
+ .text.GetScienceEncoderCountFromPacket
+                0x00000000       0x10 HindsightCAN/CANScience.o
  .text          0x00000000        0x0 i2c.o
  .data          0x00000000        0x0 i2c.o
  .bss           0x00000000        0x0 i2c.o
@@ -220,6 +226,8 @@ Discarded input sections
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
+ .progmem.data.meow
+                0x00000000     0x2775 main.o
  .text          0x00000000        0x0 motor.o
  .data          0x00000000        0x0 motor.o
  .bss           0x00000000        0x0 motor.o
@@ -620,7 +628,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x3d3c
+.text           0x00000000     0x1674
  *(.vectors)
  .vectors       0x00000000       0x94 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
                 0x00000000                __vector_default
@@ -636,39 +644,35 @@ END GROUP
  *libprintf_flt.a:*(.progmem.data)
  *libc.a:*(.progmem.data)
  *(.progmem*)
- .progmem.data.meow
-                0x00000094     0x2775 main.o
-                0x00000094                meow
-                0x0000280a                . = ALIGN (0x2)
- *fill*         0x00002809        0x1 
+                0x00000094                . = ALIGN (0x2)
  *(.jumptables)
  *(.jumptables*)
  *(.lowtext)
  *(.lowtext*)
-                0x0000280a                __ctors_start = .
+                0x00000094                __ctors_start = .
  *(.ctors)
-                0x0000280a                __ctors_end = .
-                0x0000280a                __dtors_start = .
+                0x00000094                __ctors_end = .
+                0x00000094                __dtors_start = .
  *(.dtors)
-                0x0000280a                __dtors_end = .
+                0x00000094                __dtors_end = .
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x0000280a        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
-                0x0000280a                __init
+ .init0         0x00000094        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
+                0x00000094                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x0000280a        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
+ .init2         0x00000094        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
  *(.init2)
  *(.init3)
  *(.init3)
  *(.init4)
- .init4         0x00002816       0x1a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_copy_data.o)
-                0x00002816                __do_copy_data
- .init4         0x00002830       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_clear_bss.o)
-                0x00002830                __do_clear_bss
+ .init4         0x000000a0       0x1a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_copy_data.o)
+                0x000000a0                __do_copy_data
+ .init4         0x000000ba       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_clear_bss.o)
+                0x000000ba                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
@@ -679,243 +683,243 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x00002840        0x6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
+ .init9         0x000000ca        0x6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
  *(.init9)
  *(.text)
- .text          0x00002846        0x4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
-                0x00002846                __vector_28
-                0x00002846                __vector_1
-                0x00002846                __vector_32
-                0x00002846                __vector_34
-                0x00002846                __vector_24
-                0x00002846                __vector_12
-                0x00002846                __bad_interrupt
-                0x00002846                __vector_6
-                0x00002846                __vector_31
-                0x00002846                __vector_35
-                0x00002846                __vector_23
-                0x00002846                __vector_30
-                0x00002846                __vector_25
-                0x00002846                __vector_11
-                0x00002846                __vector_13
-                0x00002846                __vector_17
-                0x00002846                __vector_19
-                0x00002846                __vector_27
-                0x00002846                __vector_5
-                0x00002846                __vector_33
-                0x00002846                __vector_9
-                0x00002846                __vector_2
-                0x00002846                __vector_36
-                0x00002846                __vector_29
-                0x00002846                __vector_26
-                0x00002846                __vector_14
-                0x00002846                __vector_10
-                0x00002846                __vector_16
-                0x00002846                __vector_20
-                0x0000284a                . = ALIGN (0x2)
+ .text          0x000000d0        0x2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
+                0x000000d0                __vector_28
+                0x000000d0                __vector_1
+                0x000000d0                __vector_32
+                0x000000d0                __vector_34
+                0x000000d0                __vector_24
+                0x000000d0                __vector_12
+                0x000000d0                __bad_interrupt
+                0x000000d0                __vector_6
+                0x000000d0                __vector_31
+                0x000000d0                __vector_35
+                0x000000d0                __vector_23
+                0x000000d0                __vector_30
+                0x000000d0                __vector_25
+                0x000000d0                __vector_11
+                0x000000d0                __vector_13
+                0x000000d0                __vector_17
+                0x000000d0                __vector_19
+                0x000000d0                __vector_27
+                0x000000d0                __vector_5
+                0x000000d0                __vector_33
+                0x000000d0                __vector_9
+                0x000000d0                __vector_2
+                0x000000d0                __vector_36
+                0x000000d0                __vector_29
+                0x000000d0                __vector_26
+                0x000000d0                __vector_14
+                0x000000d0                __vector_10
+                0x000000d0                __vector_16
+                0x000000d0                __vector_20
+                0x000000d2                . = ALIGN (0x2)
  *(.text.*)
  .text.read_ADC
-                0x0000284a       0x2c adc.o
-                0x0000284a                read_ADC
+                0x000000d2       0x2c adc.o
+                0x000000d2                read_ADC
  .text.read_gas_sensor
-                0x00002876        0x6 adc.o
-                0x00002876                read_gas_sensor
+                0x000000fe        0x6 adc.o
+                0x000000fe                read_gas_sensor
  .text.mars_moisture
-                0x0000287c        0x6 adc.o
-                0x0000287c                mars_moisture
+                0x00000104        0x6 adc.o
+                0x00000104                mars_moisture
  .text.dac_write
-                0x00002882       0x18 dac.o
-                0x00002882                dac_write
- .text.play_audio
-                0x0000289a       0x2e dac.o
-                0x0000289a                play_audio
+                0x0000010a       0x18 dac.o
+                0x0000010a                dac_write
+ .text.get_encoder_ticks
+                0x00000122       0x28 encoder.o
+                0x00000122                get_encoder_ticks
  .text.init_encoders
-                0x000028c8       0x5a encoder.o
-                0x000028c8                init_encoders
+                0x0000014a       0x5a encoder.o
+                0x0000014a                init_encoders
  .text.__vector_7
-                0x00002922       0xd0 encoder.o
-                0x00002922                __vector_7
+                0x000001a4       0xd0 encoder.o
+                0x000001a4                __vector_7
  .text.__vector_8
-                0x000029f2       0xd0 encoder.o
-                0x000029f2                __vector_8
+                0x00000274       0xd0 encoder.o
+                0x00000274                __vector_8
  .text.__vector_3
-                0x00002ac2       0xd0 encoder.o
-                0x00002ac2                __vector_3
+                0x00000344       0xd0 encoder.o
+                0x00000344                __vector_3
  .text.__vector_4
-                0x00002b92       0xd0 encoder.o
-                0x00002b92                __vector_4
+                0x00000414       0xd0 encoder.o
+                0x00000414                __vector_4
  .text.handle_telemetry_packet
-                0x00002c62       0xa6 handle_can.o
-                0x00002c62                handle_telemetry_packet
+                0x000004e4       0xa6 handle_can.o
+                0x000004e4                handle_telemetry_packet
  .text.handle_CAN_packet
-                0x00002d08       0xae handle_can.o
-                0x00002d08                handle_CAN_packet
+                0x0000058a       0xae handle_can.o
+                0x0000058a                handle_CAN_packet
  .text.AssembleTelemetryReportPacket
-                0x00002db6       0x5a HindsightCAN/CANCommon.o
-                0x00002db6                AssembleTelemetryReportPacket
+                0x00000638       0x5a HindsightCAN/CANCommon.o
+                0x00000638                AssembleTelemetryReportPacket
  .text.DecodeTelemetryType
-                0x00002e10        0x6 HindsightCAN/CANCommon.o
-                0x00002e10                DecodeTelemetryType
+                0x00000692        0x6 HindsightCAN/CANCommon.o
+                0x00000692                DecodeTelemetryType
  .text.ConstructCANID
-                0x00002e16       0x20 HindsightCAN/CANPacket.o
-                0x00002e16                ConstructCANID
+                0x00000698       0x20 HindsightCAN/CANPacket.o
+                0x00000698                ConstructCANID
  .text.WriteSenderSerialAndPacketID
-                0x00002e36       0x1a HindsightCAN/CANPacket.o
-                0x00002e36                WriteSenderSerialAndPacketID
+                0x000006b8       0x1a HindsightCAN/CANPacket.o
+                0x000006b8                WriteSenderSerialAndPacketID
  .text.GetSenderDeviceSerialNumber
-                0x00002e50        0x6 HindsightCAN/CANPacket.o
-                0x00002e50                GetSenderDeviceSerialNumber
+                0x000006d2        0x6 HindsightCAN/CANPacket.o
+                0x000006d2                GetSenderDeviceSerialNumber
  .text.GetSenderDeviceGroupCode
-                0x00002e56        0x6 HindsightCAN/CANPacket.o
-                0x00002e56                GetSenderDeviceGroupCode
+                0x000006d8        0x6 HindsightCAN/CANPacket.o
+                0x000006d8                GetSenderDeviceGroupCode
  .text.GetPacketID
-                0x00002e5c        0x8 HindsightCAN/CANPacket.o
-                0x00002e5c                GetPacketID
+                0x000006de        0x8 HindsightCAN/CANPacket.o
+                0x000006de                GetPacketID
  .text.PackIntIntoDataMSBFirst
-                0x00002e64       0x10 HindsightCAN/CANPacket.o
-                0x00002e64                PackIntIntoDataMSBFirst
+                0x000006e6       0x10 HindsightCAN/CANPacket.o
+                0x000006e6                PackIntIntoDataMSBFirst
  .text.DecodeBytesToIntMSBFirst
-                0x00002e74       0xaa HindsightCAN/CANPacket.o
-                0x00002e74                DecodeBytesToIntMSBFirst
+                0x000006f6       0xaa HindsightCAN/CANPacket.o
+                0x000006f6                DecodeBytesToIntMSBFirst
  .text.GetScienceMotorPWMFromPacket
-                0x00002f1e       0x10 HindsightCAN/CANScience.o
-                0x00002f1e                GetScienceMotorPWMFromPacket
+                0x000007a0       0x10 HindsightCAN/CANScience.o
+                0x000007a0                GetScienceMotorPWMFromPacket
  .text.GetScienceServoAngleFromPacket
-                0x00002f2e        0x6 HindsightCAN/CANScience.o
-                0x00002f2e                GetScienceServoAngleFromPacket
+                0x000007b0        0x6 HindsightCAN/CANScience.o
+                0x000007b0                GetScienceServoAngleFromPacket
  .text.GetScienceMotorIDFromPacket
-                0x00002f34        0x6 HindsightCAN/CANScience.o
-                0x00002f34                GetScienceMotorIDFromPacket
+                0x000007b6        0x6 HindsightCAN/CANScience.o
+                0x000007b6                GetScienceMotorIDFromPacket
  .text.GetScienceServoIDFromPacket
-                0x00002f3a        0x6 HindsightCAN/CANScience.o
-                0x00002f3a                GetScienceServoIDFromPacket
+                0x000007bc        0x6 HindsightCAN/CANScience.o
+                0x000007bc                GetScienceServoIDFromPacket
  .text.I2C_init
-                0x00002f40       0x40 i2c.o
-                0x00002f40                I2C_init
+                0x000007c2       0x40 i2c.o
+                0x000007c2                I2C_init
  .text.I2C_start
-                0x00002f80       0x12 i2c.o
-                0x00002f80                I2C_start
+                0x00000802       0x12 i2c.o
+                0x00000802                I2C_start
  .text.I2C_stop
-                0x00002f92        0x8 i2c.o
-                0x00002f92                I2C_stop
+                0x00000814        0x8 i2c.o
+                0x00000814                I2C_stop
  .text.I2C_write
-                0x00002f9a       0x16 i2c.o
-                0x00002f9a                I2C_write
+                0x0000081c       0x16 i2c.o
+                0x0000081c                I2C_write
  .text.I2C_read
-                0x00002fb0       0x1e i2c.o
-                0x00002fb0                I2C_read
- .text.set_LED  0x00002fce       0x3e led.o
-                0x00002fce                set_LED
+                0x00000832       0x1e i2c.o
+                0x00000832                I2C_read
+ .text.set_LED  0x00000850       0x3e led.o
+                0x00000850                set_LED
  .text.update_LEDS
-                0x0000300c       0xea led.o
-                0x0000300c                update_LEDS
- .text.set_RGB  0x000030f6       0xc8 led.o
-                0x000030f6                set_RGB
- .text.main     0x000031be       0xf4 main.o
-                0x000031be                main
+                0x0000088e       0xea led.o
+                0x0000088e                update_LEDS
+ .text.set_RGB  0x00000978       0xc8 led.o
+                0x00000978                set_RGB
+ .text.main     0x00000a40      0x15e main.o
+                0x00000a40                main
  .text.init_motor
-                0x000032b2       0x40 motor.o
-                0x000032b2                init_motor
+                0x00000b9e       0x40 motor.o
+                0x00000b9e                init_motor
  .text.set_motor_direction
-                0x000032f2       0x32 motor.o
-                0x000032f2                set_motor_direction
+                0x00000bde       0x32 motor.o
+                0x00000bde                set_motor_direction
  .text.set_motor_power
-                0x00003324       0x52 motor.o
-                0x00003324                set_motor_power
+                0x00000c10       0x52 motor.o
+                0x00000c10                set_motor_power
  .text.motor_control_tick
-                0x00003376       0x54 motor.o
-                0x00003376                motor_control_tick
+                0x00000c62       0xa0 motor.o
+                0x00000c62                motor_control_tick
  .text.disable_mob_interrupt
-                0x000033ca       0x46 PortAT90CANxxx.o
-                0x000033ca                disable_mob_interrupt
+                0x00000d02       0x46 PortAT90CANxxx.o
+                0x00000d02                disable_mob_interrupt
  .text.enable_mob_interrupt
-                0x00003410       0x42 PortAT90CANxxx.o
-                0x00003410                enable_mob_interrupt
+                0x00000d48       0x42 PortAT90CANxxx.o
+                0x00000d48                enable_mob_interrupt
  .text.__vector_18
-                0x00003452       0xd2 PortAT90CANxxx.o
-                0x00003452                __vector_18
+                0x00000d8a       0xd2 PortAT90CANxxx.o
+                0x00000d8a                __vector_18
  .text.set_mob_rx_filter
-                0x00003524       0x8c PortAT90CANxxx.o
-                0x00003524                set_mob_rx_filter
+                0x00000e5c       0x8c PortAT90CANxxx.o
+                0x00000e5c                set_mob_rx_filter
  .text.init_CAN
-                0x000035b0       0xa8 PortAT90CANxxx.o
-                0x000035b0                init_CAN
+                0x00000ee8       0xa8 PortAT90CANxxx.o
+                0x00000ee8                init_CAN
  .text.find_free_mob
-                0x00003658       0x44 PortAT90CANxxx.o
-                0x00003658                find_free_mob
- .text.InitCAN  0x0000369c       0x10 PortAT90CANxxx.o
-                0x0000369c                InitCAN
+                0x00000f90       0x44 PortAT90CANxxx.o
+                0x00000f90                find_free_mob
+ .text.InitCAN  0x00000fd4       0x10 PortAT90CANxxx.o
+                0x00000fd4                InitCAN
  .text.SendCANPacket
-                0x000036ac       0x90 PortAT90CANxxx.o
-                0x000036ac                SendCANPacket
+                0x00000fe4       0x90 PortAT90CANxxx.o
+                0x00000fe4                SendCANPacket
  .text.PollAndReceiveCANPacket
-                0x0000373c      0x126 PortAT90CANxxx.o
-                0x0000373c                PollAndReceiveCANPacket
+                0x00001074      0x126 PortAT90CANxxx.o
+                0x00001074                PollAndReceiveCANPacket
  .text.getLocalDeviceSerial
-                0x00003862        0x6 PortAT90CANxxx.o
-                0x00003862                getLocalDeviceSerial
+                0x0000119a        0x6 PortAT90CANxxx.o
+                0x0000119a                getLocalDeviceSerial
  .text.getLocalDeviceGroup
-                0x00003868        0x6 PortAT90CANxxx.o
-                0x00003868                getLocalDeviceGroup
+                0x000011a0        0x6 PortAT90CANxxx.o
+                0x000011a0                getLocalDeviceGroup
  .text.write_PWM
-                0x0000386e       0x4a pwm.o
-                0x0000386e                write_PWM
+                0x000011a6       0x4a pwm.o
+                0x000011a6                write_PWM
  .text.PCA9685_write
-                0x000038b8       0x1e servo.o
-                0x000038b8                PCA9685_write
+                0x000011f0       0x1e servo.o
+                0x000011f0                PCA9685_write
  .text.PCA9685_init
-                0x000038d6       0x38 servo.o
-                0x000038d6                PCA9685_init
+                0x0000120e       0x38 servo.o
+                0x0000120e                PCA9685_init
  .text.PCA9685_set_freq
-                0x0000390e       0x78 servo.o
-                0x0000390e                PCA9685_set_freq
+                0x00001246       0x78 servo.o
+                0x00001246                PCA9685_set_freq
  .text.PCA9685_set_pwm
-                0x00003986       0x42 servo.o
-                0x00003986                PCA9685_set_pwm
+                0x000012be       0x42 servo.o
+                0x000012be                PCA9685_set_pwm
  .text.init_servos
-                0x000039c8        0xa servo.o
-                0x000039c8                init_servos
+                0x00001300        0xa servo.o
+                0x00001300                init_servos
  .text.set_servo_position
-                0x000039d2       0x38 servo.o
-                0x000039d2                set_servo_position
+                0x0000130a       0x38 servo.o
+                0x0000130a                set_servo_position
  .text.__vector_15
-                0x00003a0a       0xbe timers.o
-                0x00003a0a                __vector_15
+                0x00001342       0xbe timers.o
+                0x00001342                __vector_15
  .text.setup_timers
-                0x00003ac8       0x44 timers.o
-                0x00003ac8                setup_timers
- .text.get_mS   0x00003b0c       0x8a timers.o
-                0x00003b0c                get_mS
+                0x00001400       0x44 timers.o
+                0x00001400                setup_timers
+ .text.get_mS   0x00001444       0x8a timers.o
+                0x00001444                get_mS
  .text.__vector_21
-                0x00003b96       0x50 usart.o
-                0x00003b96                __vector_21
+                0x000014ce       0x50 usart.o
+                0x000014ce                __vector_21
  .text.__vector_22
-                0x00003be6       0x6a usart.o
-                0x00003be6                __vector_22
+                0x0000151e       0x6a usart.o
+                0x0000151e                __vector_22
  .text.libgcc.div
-                0x00003c50       0x26 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
-                0x00003c50                _div
-                0x00003c50                __divmodhi4
+                0x00001588       0x26 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+                0x00001588                _div
+                0x00001588                __divmodhi4
  .text.libgcc.div
-                0x00003c76       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
-                0x00003c76                __udivmodsi4
+                0x000015ae       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
+                0x000015ae                __udivmodsi4
  .text.libgcc.div
-                0x00003cba       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodsi4.o)
-                0x00003cba                __divmodsi4
+                0x000015f2       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodsi4.o)
+                0x000015f2                __divmodsi4
  .text.libgcc.div
-                0x00003ce2       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_negsi2.o)
-                0x00003ce2                __negsi2
+                0x0000161a       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_negsi2.o)
+                0x0000161a                __negsi2
  .text.libgcc.mul
-                0x00003cf2       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_umulhisi3.o)
-                0x00003cf2                __umulhisi3
+                0x0000162a       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_umulhisi3.o)
+                0x0000162a                __umulhisi3
  .text.libgcc.div
-                0x00003d10       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
-                0x00003d10                __udivmodhi4
-                0x00003d38                . = ALIGN (0x2)
+                0x00001648       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+                0x00001648                __udivmodhi4
+                0x00001670                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00003d38        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
-                0x00003d38                _exit
-                0x00003d38                exit
+ .fini9         0x00001670        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+                0x00001670                _exit
+                0x00001670                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -934,11 +938,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00003d38        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+ .fini0         0x00001670        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00003d3c                _etext = .
+                0x00001674                _etext = .
 
-.data           0x00800100        0x0 load address 0x00003d3c
+.data           0x00800100        0x0 load address 0x00001674
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -978,8 +982,8 @@ END GROUP
                 0x00800137                usart_RX_buf
                 0x00800147                txbp
                 0x00800148                PROVIDE (__bss_end, .)
-                0x00003d3c                __data_load_start = LOADADDR (.data)
-                0x00003d3c                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00001674                __data_load_start = LOADADDR (.data)
+                0x00001674                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800148        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -1065,7 +1069,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x508
+.debug_aranges  0x00000000      0x520
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x48 adc.o
@@ -1080,30 +1084,30 @@ END GROUP
  .debug_aranges
                 0x000001b0       0xa8 HindsightCAN/CANPacket.o
  .debug_aranges
-                0x00000258       0x50 HindsightCAN/CANScience.o
+                0x00000258       0x68 HindsightCAN/CANScience.o
  .debug_aranges
-                0x000002a8       0x40 i2c.o
+                0x000002c0       0x40 i2c.o
  .debug_aranges
-                0x000002e8       0x30 led.o
+                0x00000300       0x30 led.o
  .debug_aranges
-                0x00000318       0x20 main.o
+                0x00000330       0x20 main.o
  .debug_aranges
-                0x00000338       0x38 motor.o
+                0x00000350       0x38 motor.o
  .debug_aranges
-                0x00000370       0x78 PortAT90CANxxx.o
+                0x00000388       0x78 PortAT90CANxxx.o
  .debug_aranges
-                0x000003e8       0x28 pwm.o
+                0x00000400       0x28 pwm.o
  .debug_aranges
-                0x00000410       0x48 servo.o
+                0x00000428       0x48 servo.o
  .debug_aranges
-                0x00000458       0x40 timers.o
+                0x00000470       0x40 timers.o
  .debug_aranges
-                0x00000498       0x70 usart.o
+                0x000004b0       0x70 usart.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x4970
+.debug_info     0x00000000     0x4b31
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0xa2d C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
  .debug_info    0x00000a2d      0x1ba adc.o
@@ -1112,18 +1116,18 @@ END GROUP
  .debug_info    0x00000fa5      0x481 handle_can.o
  .debug_info    0x00001426      0xbf9 HindsightCAN/CANCommon.o
  .debug_info    0x0000201f      0x6db HindsightCAN/CANPacket.o
- .debug_info    0x000026fa      0x404 HindsightCAN/CANScience.o
- .debug_info    0x00002afe      0x120 i2c.o
- .debug_info    0x00002c1e      0x1e4 led.o
- .debug_info    0x00002e02      0x450 main.o
- .debug_info    0x00003252      0x2a3 motor.o
- .debug_info    0x000034f5      0x5a2 PortAT90CANxxx.o
- .debug_info    0x00003a97       0xd7 pwm.o
- .debug_info    0x00003b6e      0x53e servo.o
- .debug_info    0x000040ac      0x19b timers.o
- .debug_info    0x00004247      0x729 usart.o
+ .debug_info    0x000026fa      0x584 HindsightCAN/CANScience.o
+ .debug_info    0x00002c7e      0x120 i2c.o
+ .debug_info    0x00002d9e      0x1e4 led.o
+ .debug_info    0x00002f82      0x491 main.o
+ .debug_info    0x00003413      0x2a3 motor.o
+ .debug_info    0x000036b6      0x5a2 PortAT90CANxxx.o
+ .debug_info    0x00003c58       0xd7 pwm.o
+ .debug_info    0x00003d2f      0x53e servo.o
+ .debug_info    0x0000426d      0x19b timers.o
+ .debug_info    0x00004408      0x729 usart.o
 
-.debug_abbrev   0x00000000     0x1ec3
+.debug_abbrev   0x00000000     0x1ee0
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x9a0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
  .debug_abbrev  0x000009a0       0xf1 adc.o
@@ -1135,15 +1139,15 @@ END GROUP
  .debug_abbrev  0x00001141      0x123 HindsightCAN/CANScience.o
  .debug_abbrev  0x00001264       0xa1 i2c.o
  .debug_abbrev  0x00001305       0xf1 led.o
- .debug_abbrev  0x000013f6      0x1bd main.o
- .debug_abbrev  0x000015b3      0x139 motor.o
- .debug_abbrev  0x000016ec      0x26a PortAT90CANxxx.o
- .debug_abbrev  0x00001956       0x7a pwm.o
- .debug_abbrev  0x000019d0      0x15b servo.o
- .debug_abbrev  0x00001b2b       0xf0 timers.o
- .debug_abbrev  0x00001c1b      0x2a8 usart.o
+ .debug_abbrev  0x000013f6      0x1da main.o
+ .debug_abbrev  0x000015d0      0x139 motor.o
+ .debug_abbrev  0x00001709      0x26a PortAT90CANxxx.o
+ .debug_abbrev  0x00001973       0x7a pwm.o
+ .debug_abbrev  0x000019ed      0x15b servo.o
+ .debug_abbrev  0x00001b48       0xf0 timers.o
+ .debug_abbrev  0x00001c38      0x2a8 usart.o
 
-.debug_line     0x00000000     0x28d4
+.debug_line     0x00000000     0x295b
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x175 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
  .debug_line    0x00000175      0x18d adc.o
@@ -1152,18 +1156,18 @@ END GROUP
  .debug_line    0x0000067d      0x1e6 handle_can.o
  .debug_line    0x00000863      0x413 HindsightCAN/CANCommon.o
  .debug_line    0x00000c76      0x346 HindsightCAN/CANPacket.o
- .debug_line    0x00000fbc      0x196 HindsightCAN/CANScience.o
- .debug_line    0x00001152      0x166 i2c.o
- .debug_line    0x000012b8      0x346 led.o
- .debug_line    0x000015fe      0x2bf main.o
- .debug_line    0x000018bd      0x1a9 motor.o
- .debug_line    0x00001a66      0x50d PortAT90CANxxx.o
- .debug_line    0x00001f73      0x11c pwm.o
- .debug_line    0x0000208f      0x260 servo.o
- .debug_line    0x000022ef      0x18d timers.o
- .debug_line    0x0000247c      0x458 usart.o
+ .debug_line    0x00000fbc      0x1fe HindsightCAN/CANScience.o
+ .debug_line    0x000011ba      0x166 i2c.o
+ .debug_line    0x00001320      0x346 led.o
+ .debug_line    0x00001666      0x2d8 main.o
+ .debug_line    0x0000193e      0x1af motor.o
+ .debug_line    0x00001aed      0x50d PortAT90CANxxx.o
+ .debug_line    0x00001ffa      0x11c pwm.o
+ .debug_line    0x00002116      0x260 servo.o
+ .debug_line    0x00002376      0x18d timers.o
+ .debug_line    0x00002503      0x458 usart.o
 
-.debug_frame    0x00000000      0xde4
+.debug_frame    0x00000000      0xe60
  *(.debug_frame)
  .debug_frame   0x00000000       0x74 adc.o
  .debug_frame   0x00000074       0x50 dac.o
@@ -1171,18 +1175,18 @@ END GROUP
  .debug_frame   0x000001d8       0x8c handle_can.o
  .debug_frame   0x00000264      0x2c4 HindsightCAN/CANCommon.o
  .debug_frame   0x00000528      0x17c HindsightCAN/CANPacket.o
- .debug_frame   0x000006a4       0xc8 HindsightCAN/CANScience.o
- .debug_frame   0x0000076c       0x64 i2c.o
- .debug_frame   0x000007d0       0x5c led.o
- .debug_frame   0x0000082c       0x34 main.o
- .debug_frame   0x00000860       0x88 motor.o
- .debug_frame   0x000008e8      0x160 PortAT90CANxxx.o
- .debug_frame   0x00000a48       0x34 pwm.o
- .debug_frame   0x00000a7c       0xa4 servo.o
- .debug_frame   0x00000b20       0xe8 timers.o
- .debug_frame   0x00000c08      0x1dc usart.o
+ .debug_frame   0x000006a4      0x128 HindsightCAN/CANScience.o
+ .debug_frame   0x000007cc       0x64 i2c.o
+ .debug_frame   0x00000830       0x5c led.o
+ .debug_frame   0x0000088c       0x34 main.o
+ .debug_frame   0x000008c0       0xa4 motor.o
+ .debug_frame   0x00000964      0x160 PortAT90CANxxx.o
+ .debug_frame   0x00000ac4       0x34 pwm.o
+ .debug_frame   0x00000af8       0xa4 servo.o
+ .debug_frame   0x00000b9c       0xe8 timers.o
+ .debug_frame   0x00000c84      0x1dc usart.o
 
-.debug_str      0x00000000     0x11ea
+.debug_str      0x00000000     0x1250
  *(.debug_str)
  .debug_str     0x00000000      0x39f C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/at90can128/avr51/crtat90can128.o
  .debug_str     0x0000039f      0x17d adc.o
@@ -1197,28 +1201,28 @@ END GROUP
                                 0x56d (size before relaxing)
  .debug_str     0x00000b8b      0x170 HindsightCAN/CANPacket.o
                                 0x3f6 (size before relaxing)
- .debug_str     0x00000cfb       0x94 HindsightCAN/CANScience.o
-                                0x331 (size before relaxing)
- .debug_str     0x00000d8f       0x2a i2c.o
+ .debug_str     0x00000cfb      0x100 HindsightCAN/CANScience.o
+                                0x3ce (size before relaxing)
+ .debug_str     0x00000dfb       0x2a i2c.o
                                 0x19a (size before relaxing)
- .debug_str     0x00000db9       0x30 led.o
+ .debug_str     0x00000e25       0x2a led.o
                                 0x191 (size before relaxing)
- .debug_str     0x00000de9       0xd6 main.o
-                                0x2a3 (size before relaxing)
- .debug_str     0x00000ebf       0x44 motor.o
+ .debug_str     0x00000e4f       0xd6 main.o
+                                0x2aa (size before relaxing)
+ .debug_str     0x00000f25       0x44 motor.o
                                 0x1f6 (size before relaxing)
- .debug_str     0x00000f03      0x114 PortAT90CANxxx.o
+ .debug_str     0x00000f69      0x114 PortAT90CANxxx.o
                                 0x339 (size before relaxing)
- .debug_str     0x00001017       0x17 pwm.o
+ .debug_str     0x0000107d       0x17 pwm.o
                                 0x174 (size before relaxing)
- .debug_str     0x0000102e       0x5b servo.o
+ .debug_str     0x00001094       0x5b servo.o
                                 0x251 (size before relaxing)
- .debug_str     0x00001089       0x3d timers.o
+ .debug_str     0x000010ef       0x3d timers.o
                                 0x1c8 (size before relaxing)
- .debug_str     0x000010c6      0x124 usart.o
+ .debug_str     0x0000112c      0x124 usart.o
                                 0x2a9 (size before relaxing)
 
-.debug_loc      0x00000000     0x3e4c
+.debug_loc      0x00000000     0x407e
  *(.debug_loc)
  .debug_loc     0x00000000       0x21 adc.o
  .debug_loc     0x00000021      0x164 dac.o
@@ -1226,16 +1230,16 @@ END GROUP
  .debug_loc     0x00000402      0x2e1 handle_can.o
  .debug_loc     0x000006e3      0xfa4 HindsightCAN/CANCommon.o
  .debug_loc     0x00001687      0x72f HindsightCAN/CANPacket.o
- .debug_loc     0x00001db6      0x3dd HindsightCAN/CANScience.o
- .debug_loc     0x00002193       0x8d i2c.o
- .debug_loc     0x00002220      0x37d led.o
- .debug_loc     0x0000259d       0xa3 main.o
- .debug_loc     0x00002640      0x1ee motor.o
- .debug_loc     0x0000282e      0x6f1 PortAT90CANxxx.o
- .debug_loc     0x00002f1f       0xce pwm.o
- .debug_loc     0x00002fed      0x409 servo.o
- .debug_loc     0x000033f6      0x215 timers.o
- .debug_loc     0x0000360b      0x841 usart.o
+ .debug_loc     0x00001db6      0x5b5 HindsightCAN/CANScience.o
+ .debug_loc     0x0000236b       0x8d i2c.o
+ .debug_loc     0x000023f8      0x37d led.o
+ .debug_loc     0x00002775       0xa3 main.o
+ .debug_loc     0x00002818      0x248 motor.o
+ .debug_loc     0x00002a60      0x6f1 PortAT90CANxxx.o
+ .debug_loc     0x00003151       0xce pwm.o
+ .debug_loc     0x0000321f      0x409 servo.o
+ .debug_loc     0x00003628      0x215 timers.o
+ .debug_loc     0x0000383d      0x841 usart.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1255,7 +1259,7 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x500
+.debug_ranges   0x00000000      0x518
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x38 adc.o
  .debug_ranges  0x00000038       0x18 dac.o
@@ -1263,16 +1267,16 @@ END GROUP
  .debug_ranges  0x00000098       0x18 handle_can.o
  .debug_ranges  0x000000b0       0xb0 HindsightCAN/CANCommon.o
  .debug_ranges  0x00000160       0xc8 HindsightCAN/CANPacket.o
- .debug_ranges  0x00000228       0x40 HindsightCAN/CANScience.o
- .debug_ranges  0x00000268       0x30 i2c.o
- .debug_ranges  0x00000298       0x98 led.o
- .debug_ranges  0x00000330       0x10 main.o
- .debug_ranges  0x00000340       0x28 motor.o
- .debug_ranges  0x00000368       0xa0 PortAT90CANxxx.o
- .debug_ranges  0x00000408       0x18 pwm.o
- .debug_ranges  0x00000420       0x38 servo.o
- .debug_ranges  0x00000458       0x30 timers.o
- .debug_ranges  0x00000488       0x78 usart.o
+ .debug_ranges  0x00000228       0x58 HindsightCAN/CANScience.o
+ .debug_ranges  0x00000280       0x30 i2c.o
+ .debug_ranges  0x000002b0       0x98 led.o
+ .debug_ranges  0x00000348       0x10 main.o
+ .debug_ranges  0x00000358       0x28 motor.o
+ .debug_ranges  0x00000380       0xa0 PortAT90CANxxx.o
+ .debug_ranges  0x00000420       0x18 pwm.o
+ .debug_ranges  0x00000438       0x38 servo.o
+ .debug_ranges  0x00000470       0x30 timers.o
+ .debug_ranges  0x000004a0       0x78 usart.o
 
 .debug_macro
  *(.debug_macro)
