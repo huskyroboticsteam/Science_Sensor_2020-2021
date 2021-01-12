@@ -20,18 +20,21 @@ void init_motor(){
 		motor_powers[m] = 0;
 		write_PWM(m + 3, 0);
 	}
+	PORTC = 1<<5 | 1<<6; //enable limit switch pullups
 	init_encoders();
 }
 
 void set_motor_direction(uint8_t motor, uint8_t dir){
-	dir = !!dir;
 	if(motor > 2){
 		return;
 	}
 	motor += 3;
-	dir <<= motor;
-	PORTB &= ~dir;
-	PORTB |= dir;
+	uint8_t bit = 1 << motor;
+	if(!dir){
+		PORTB &= ~bit;
+	} else {
+		PORTB |= bit;
+	}
 }
 
 
@@ -56,6 +59,9 @@ void set_motor_power(uint8_t motor, int16_t power){
 
 /*Update the motors. Call in a loop*/
 void motor_control_tick(){
+	volatile uint8_t ls1 = PINC & (1<<6);
+	volatile uint8_t ls2 = PINC & (1<<5);
+	volatile uint8_t p = PINC;
 	for(uint8_t motor = 0;motor < 3;motor++){
 		if(get_mS() - last_update[motor] > MOTOR_SET_TIMEOUT){
 			/*If more than set time has elapsed without an update to this motor, turn it off*/
@@ -63,6 +69,13 @@ void motor_control_tick(){
 		}
 		int16_t power = motor_powers[motor];
 		if(power < 0){
+			/*stop the motors if the limit switches are triggered*/
+			if(motor == 0 && ls1 == 0){
+				power = 0;	
+			}
+			if(motor == 1 && ls2 == 0){
+				power = 0;
+			}
 			set_motor_direction(motor, 1);
 			power = -power;
 		} else {
