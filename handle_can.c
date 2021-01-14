@@ -43,7 +43,7 @@ void handle_CAN_packet(CANPacket *packet){
 			break;
 		case ID_MOTOR_UNIT_SERVO_SET: ;
 			uint8_t servo = GetScienceServoIDFromPacket(packet);
-			int8_t angle = GetScienceServoAngleFromPacket(packet);
+			uint8_t angle = GetScienceServoAngleFromPacket(packet);
 			set_servo_position(servo, angle);
 			break;
 		case ID_LED_COLOR: ;
@@ -51,7 +51,7 @@ void handle_CAN_packet(CANPacket *packet){
 			uint8_t g = packet->data[2];
 			uint8_t b = packet->data[3];
 			uint8_t R[3] = {r, r, r};
-			uint8_t G[3] = {g, g, b};
+			uint8_t G[3] = {g, g, g};
 			uint8_t B[3] = {b, b, b};
 			set_RGB(R, G, B);
 			break;
