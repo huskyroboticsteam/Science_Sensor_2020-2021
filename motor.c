@@ -71,9 +71,11 @@ void motor_control_tick(){
 		if(power < 0){
 			/*stop the motors if the limit switches are triggered*/
 			if(motor == 0 && ls1 == 0){
+				reset_encoder(0);
 				power = 0;	
 			}
 			if(motor == 1 && ls2 == 0){
+				reset_encoder(1);
 				power = 0;
 			}
 			set_motor_direction(motor, 1);

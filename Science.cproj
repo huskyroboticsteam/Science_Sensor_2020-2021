@@ -165,6 +165,9 @@
     <Compile Include="HindsightCAN\CANScience.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HindsightCAN\uv.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="i2c.c">
       <SubType>compile</SubType>
     </Compile>

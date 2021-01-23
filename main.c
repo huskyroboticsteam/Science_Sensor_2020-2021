@@ -22,6 +22,7 @@
 #include "led.h"
 #include "i2c.h"
 #include "dac.h"
+#include "uv.h"
 #include "meow.h"
 
 void handle_CAN_packet(CANPacket *packet);
@@ -39,6 +40,7 @@ int main(){
 	uint8_t L[3] = {0, 0, 0};
 	setup_timers();
 	I2C_init(333);
+	usart_init(19200);
 	cli();
 	set_RGB(H, L, L);
 	_delay_ms(100);
@@ -47,7 +49,7 @@ int main(){
 	dac_write(0);
 	PORTD = 0;
 	sei();
-	//wdt_enable(WDTO_2S);
+	wdt_enable(WDTO_2S);
 	InitCAN(DEVICE_GROUP_SCIENCE, get_dip_switch());
 	init_servos();
 	init_motor();
@@ -57,8 +59,6 @@ int main(){
 		write_PWM(3, 10);
 		while(1);*/
 	CANPacket packet;
-	int last;
-	uint16_t sample = 0;
 	while(1){
 		if(PollAndReceiveCANPacket(&packet) == 0){
 			set_LED(LED_CAN, 3);
@@ -67,6 +67,8 @@ int main(){
 			set_LED(LED_CAN, 0);
 		}
 		motor_control_tick();
+		uint16_t sensor = read_uv_sensor();
+		tprintf("%d\n", sensor);
 		wdt_reset();
 	}
 }

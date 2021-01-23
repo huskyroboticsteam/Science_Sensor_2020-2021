@@ -18,6 +18,8 @@ HindsightCAN\CANPacket.c
 
 HindsightCAN\CANScience.c
 
+HindsightCAN\uv.c
+
 i2c.c
 
 led.c

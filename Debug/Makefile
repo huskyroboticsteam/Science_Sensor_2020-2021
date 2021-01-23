@@ -46,6 +46,7 @@ C_SRCS +=  \
 ../HindsightCAN/CANMotorUnit.c \
 ../HindsightCAN/CANPacket.c \
 ../HindsightCAN/CANScience.c \
+../HindsightCAN/uv.c \
 ../i2c.c \
 ../led.c \
 ../main.c \
@@ -74,6 +75,7 @@ HindsightCAN/CANCommon.o \
 HindsightCAN/CANMotorUnit.o \
 HindsightCAN/CANPacket.o \
 HindsightCAN/CANScience.o \
+HindsightCAN/uv.o \
 i2c.o \
 led.o \
 main.o \
@@ -95,6 +97,7 @@ HindsightCAN/CANCommon.o \
 HindsightCAN/CANMotorUnit.o \
 HindsightCAN/CANPacket.o \
 HindsightCAN/CANScience.o \
+HindsightCAN/uv.o \
 i2c.o \
 led.o \
 main.o \
@@ -116,6 +119,7 @@ HindsightCAN/CANCommon.d \
 HindsightCAN/CANMotorUnit.d \
 HindsightCAN/CANPacket.d \
 HindsightCAN/CANScience.d \
+HindsightCAN/uv.d \
 i2c.d \
 led.d \
 main.d \
@@ -137,6 +141,7 @@ HindsightCAN/CANCommon.d \
 HindsightCAN/CANMotorUnit.d \
 HindsightCAN/CANPacket.d \
 HindsightCAN/CANScience.d \
+HindsightCAN/uv.d \
 i2c.d \
 led.d \
 main.d \
@@ -213,6 +218,13 @@ HindsightCAN/CANPacket.o: ../HindsightCAN/CANPacket.c
 	
 
 HindsightCAN/CANScience.o: ../HindsightCAN/CANScience.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DCHIP_TYPE=CHIP_TYPE_AT90CANxxx  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../include" -I"../HindsightCAN"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=at90can128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\at90can128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+HindsightCAN/uv.o: ../HindsightCAN/uv.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DCHIP_TYPE=CHIP_TYPE_AT90CANxxx  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../include" -I"../HindsightCAN"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=at90can128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\at90can128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

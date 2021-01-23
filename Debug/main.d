@@ -27,7 +27,8 @@ main.d main.o: .././main.c .././config.h \
  ../include/motor.h ../include/config.h ../include/timers.h \
  ../include/adc.h ../include/messaging.h ../include/util.h \
  ../include/servo.h ../include/usart.h ../include/config.h \
- ../include/led.h ../include/i2c.h ../include/dac.h ../include/meow.h
+ ../include/led.h ../include/i2c.h ../include/dac.h ../include/uv.h \
+ ../include/meow.h
 
 .././config.h:
 
@@ -116,5 +117,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../include/i2c.h:
 
 ../include/dac.h:
+
+../include/uv.h:
 
 ../include/meow.h:

@@ -3,6 +3,7 @@
 #include <led.h>
 #include <motor.h>
 #include <adc.h>
+#include <encoder.h>
 #include "CANPacket.h"
 #include "CANScience.h"
 #include "CANCommon.h"
@@ -21,13 +22,19 @@ void handle_telemetry_packet(CANPacket *packet){
 			sensor_val = read_gas_sensor();
 			break;
 		case CAN_SCIENCE_SENSOR_UV:
-			sensor_val = 666;//read_uv_sensor();
+			sensor_val = read_uv_sensor();
 			break;
 		case CAN_SCIENCE_SENSOR_MOISTURE:
 			sensor_val = mars_moisture();
 			break;
 		case CAN_SCIENCE_SENSOR_AIR_QUALITY:
 			//sensor_val = read_aq_sensor();
+			break;
+		case PACKET_TELEMETRY_MOTOR1_ENC:
+			sensor_val = get_encoder_ticks(0);
+			break;
+		case PACKET_TELEMETRY_MOTOR2_ENC:
+			sensor_val = get_encoder_ticks(1);
 			break;
 	}
 	AssembleTelemetryReportPacket(&new_packet, target_group, target_serial, type, sensor_val);
