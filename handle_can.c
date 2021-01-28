@@ -4,6 +4,8 @@
 #include <motor.h>
 #include <adc.h>
 #include <encoder.h>
+#include "timers.h"
+#include "uv.h"
 #include "CANPacket.h"
 #include "CANScience.h"
 #include "CANCommon.h"
@@ -36,6 +38,9 @@ void handle_telemetry_packet(CANPacket *packet){
 		case PACKET_TELEMETRY_MOTOR2_ENC:
 			sensor_val = get_encoder_ticks(1);
 			break;
+		default:
+			set_LED(LED_ERR, 3);
+			update_LEDS(get_mS()/40);
 	}
 	AssembleTelemetryReportPacket(&new_packet, target_group, target_serial, type, sensor_val);
 	SendCANPacket(&new_packet);
@@ -57,14 +62,16 @@ void handle_CAN_packet(CANPacket *packet){
 			uint8_t r = packet->data[1];
 			uint8_t g = packet->data[2];
 			uint8_t b = packet->data[3];
-			uint8_t R[3] = {r, r, r};
-			uint8_t G[3] = {g, g, g};
-			uint8_t B[3] = {b, b, b};
-			set_RGB(R, G, B);
+			uint8_t l = packet->data[4];
+			set_motor_leds(0);
+			set_RGB_LED(l, r, g, b);
 			break;
 		case ID_TELEMETRY_PULL:
 			handle_telemetry_packet(packet);
 			break;
+		default:
+			set_LED(LED_ERR, 3);
+			update_LEDS(get_mS()/40);
 	}
 }
 

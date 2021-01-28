@@ -15,7 +15,7 @@ timers.d timers.o: .././timers.c .././config.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  ../include/timers.h ../include/servo.h ../include/util.h \
- ../include/led.h
+ ../include/led.h ../include/usart.h ../include/config.h
 
 .././config.h:
 
@@ -56,3 +56,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../include/util.h:
 
 ../include/led.h:
+
+../include/usart.h:
+
+../include/config.h:

@@ -3,6 +3,9 @@
 #include "led.h"
 
 uint8_t LED_states;
+uint8_t RS[3] = {0, 0, 0};
+uint8_t GS[3] = {0, 0, 0};
+uint8_t BS[3] = {0, 0, 0};
 
 /*Sets the mode of the debug LEDs
 Parameters:
@@ -172,4 +175,12 @@ void set_RGB(uint8_t *R, uint8_t *G, uint8_t *B){
 		}
 	}
 	sei();
+}
+
+/*Sets the color of RGB LED <led> to the specified R G B values*/
+void set_RGB_LED(uint8_t led, uint8_t R, uint8_t G, uint8_t B){
+	RS[led] = R;
+	GS[led] = G;
+	BS[led] = B;
+	set_RGB(RS, GS, BS);
 }

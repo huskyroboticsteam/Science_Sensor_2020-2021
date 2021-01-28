@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include <avr/pgmspace.h>
+#include <avr/eeprom.h>
 
 #include "CANLibrary.h"
 
@@ -33,7 +34,6 @@ int main(){
 	DDRB = 1<<6;
 	PORTB = 1<<6;
 	PORTA = 0xF0; //Enable DIP switch pullups
-	//_delay_ms(250);
 	DDRG |= 1<<4;
 	PORTB = 0;
 	uint8_t H[3] = {64, 64, 64};
@@ -46,18 +46,18 @@ int main(){
 	_delay_ms(100);
 	play_audio(meow, sizeof(meow));
 	set_RGB(L, L, L);
-	dac_write(0);
-	PORTD = 0;
 	sei();
+	uint8_t count = eeprom_read_byte(0);
+	eeprom_write_byte(0, count + 1);
+	if(count % 32 == 0){
+		roll();	
+	}
+	PORTD = 0;
 	wdt_enable(WDTO_2S);
 	InitCAN(DEVICE_GROUP_SCIENCE, get_dip_switch());
 	init_servos();
 	init_motor();
-	/*	DDRE |= 8 | 16 | 32;
-		DDRB |= 8 | 16 | 32;
-		//PORTE = 8;
-		write_PWM(3, 10);
-		while(1);*/
+	VEML6070_init();
 	CANPacket packet;
 	while(1){
 		if(PollAndReceiveCANPacket(&packet) == 0){
@@ -67,8 +67,7 @@ int main(){
 			set_LED(LED_CAN, 0);
 		}
 		motor_control_tick();
-		uint16_t sensor = read_uv_sensor();
-		tprintf("%d\n", sensor);
+		_delay_ms(25);
 		wdt_reset();
 	}
 }

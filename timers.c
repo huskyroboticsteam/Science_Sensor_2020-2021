@@ -6,6 +6,7 @@
 #include "servo.h"
 #include "util.h"
 #include "led.h"
+#include "usart.h"
 
 volatile uint32_t TOF_Cnt; //Timer1 overflow counter
 volatile uint8_t PID_due;
@@ -43,12 +44,7 @@ void setup_timers(){
 
 /*Returns the number of milliseconds since timer initialization*/
 uint32_t get_mS(){
-	uint16_t timer_ticks = TCNT1;
-	#ifdef REV_2
-	return (TOF_Cnt * 20) + (timer_ticks/250L);
-	#else
-	return (TOF_Cnt * 40) + (timer_ticks/250L);
-	#endif
+	return (TOF_Cnt * 20L) + TCNT1H;
 }
 
 /*Returns the number of microseconds since system initialization*/

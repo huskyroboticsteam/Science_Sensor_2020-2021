@@ -34,7 +34,7 @@
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
         <InterfaceProperties>
-          <JtagDbgClock>200000</JtagDbgClock>
+          <JtagDbgClock>1000000</JtagDbgClock>
         </InterfaceProperties>
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
@@ -43,7 +43,7 @@
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>JTAG</avrtoolinterface>
-    <avrtoolinterfaceclock>200000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>1000000</avrtoolinterfaceclock>
     <AsfFrameworkConfig>
       <framework-data xmlns="">
         <options />
@@ -165,9 +165,6 @@
     <Compile Include="HindsightCAN\CANScience.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HindsightCAN\uv.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="i2c.c">
       <SubType>compile</SubType>
     </Compile>
@@ -199,6 +196,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="util.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="uv.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

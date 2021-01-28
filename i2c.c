@@ -1,6 +1,9 @@
 #include "config.h"
 #include <avr/io.h>
 #include <util/delay.h>
+#include "led.h"
+#include "timers.h"
+#include "usart.h"
 #include "i2c.h"
 
 /*Initialize I2C
@@ -35,7 +38,16 @@ void I2C_write(uint8_t byte){
 /*Read a byte from an I2C device
 	Setting ack to one enables sending an acknowledge pulse*/
 uint8_t I2C_read(uint8_t ack){
+	uint32_t ms = get_mS();
 	TWCR = ((1<< TWINT) | (1<<TWEN) | ((!!ack)<<TWEA));
-	while(!(TWCR & (1 <<TWINT))); //Wait for something to read
+	while(!(TWCR & (1 <<TWINT))){ //Wait for something to read
+		if(get_mS() - ms > 250){
+			set_LED(LED_ERR, 3);
+			update_LEDS(get_mS()/40);
+			tprintf("I2C read timeout\n");
+			set_LED(LED_ERR, 0);
+			break;
+		}
+	}
 	return TWDR;
 }

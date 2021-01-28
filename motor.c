@@ -8,9 +8,11 @@
 #include "messaging.h"
 #include "usart.h"
 #include "util.h"
+#include "led.h"
 
 int16_t motor_powers[3];
 int32_t last_update[3];
+uint8_t motor_leds = 1;
 
 /*Initializes the motor controller and sets some reasonable defaults*/
 void init_motor(){
@@ -37,6 +39,10 @@ void set_motor_direction(uint8_t motor, uint8_t dir){
 	}
 }
 
+/*Enables or disables whether to use the RGB LEDS to indicate motor states*/
+void set_motor_leds(uint8_t en){
+	motor_leds = !!en;
+}
 
 /*Sets the motor power more safely
   Parameters:
@@ -61,7 +67,7 @@ void set_motor_power(uint8_t motor, int16_t power){
 void motor_control_tick(){
 	volatile uint8_t ls1 = PINC & (1<<6);
 	volatile uint8_t ls2 = PINC & (1<<5);
-	volatile uint8_t p = PINC;
+	//volatile uint8_t p = PINC;
 	for(uint8_t motor = 0;motor < 3;motor++){
 		if(get_mS() - last_update[motor] > MOTOR_SET_TIMEOUT){
 			/*If more than set time has elapsed without an update to this motor, turn it off*/
@@ -72,16 +78,29 @@ void motor_control_tick(){
 			/*stop the motors if the limit switches are triggered*/
 			if(motor == 0 && ls1 == 0){
 				reset_encoder(0);
-				power = 0;	
+				power = 0;
+				if(motor_leds){
+					set_LED(LED_DBG, 3);
+					update_LEDS(get_mS()/40);
+					set_LED(LED_DBG, 0);
+				}
 			}
 			if(motor == 1 && ls2 == 0){
 				reset_encoder(1);
 				power = 0;
+				if(motor_leds){
+					set_LED(LED_DBG, 3);
+					update_LEDS(get_mS()/40);
+					set_LED(LED_DBG, 0);
+				}
 			}
 			set_motor_direction(motor, 1);
 			power = -power;
 		} else {
 			set_motor_direction(motor, 0);
+		}
+		if(motor_leds){
+			set_RGB_LED(motor, 0, power / 4, 0);
 		}
 		write_PWM(motor + 3, power);
 	}
