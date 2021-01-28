@@ -130,7 +130,7 @@ Discarded input sections
  .text.GetModeFromPacket
                 0x00000000        0x6 HindsightCAN/CANMotorUnit.o
  .text.AssemblePWMDirSetPacket
-                0x00000000       0x4a HindsightCAN/CANMotorUnit.o
+                0x00000000       0x38 HindsightCAN/CANMotorUnit.o
  .text.GetPWMFromPacket
                 0x00000000       0x10 HindsightCAN/CANMotorUnit.o
  .text.GetDirectionFromPacket
@@ -167,16 +167,24 @@ Discarded input sections
                 0x00000000       0x4c HindsightCAN/CANMotorUnit.o
  .text.GetMaxJointRevolutionsFromPacket
                 0x00000000       0x10 HindsightCAN/CANMotorUnit.o
- .debug_info    0x00000000      0xbd7 HindsightCAN/CANMotorUnit.o
+ .text.AssembleEncoderInitializePacket
+                0x00000000       0x68 HindsightCAN/CANMotorUnit.o
+ .text.GetEncoderTypeFromPacket
+                0x00000000        0x8 HindsightCAN/CANMotorUnit.o
+ .text.GetEncoderDirectionFromPacket
+                0x00000000        0x8 HindsightCAN/CANMotorUnit.o
+ .text.GetEncoderZeroFromPacket
+                0x00000000        0x8 HindsightCAN/CANMotorUnit.o
+ .debug_info    0x00000000      0xd2b HindsightCAN/CANMotorUnit.o
  .debug_abbrev  0x00000000      0x118 HindsightCAN/CANMotorUnit.o
- .debug_loc     0x00000000      0xea5 HindsightCAN/CANMotorUnit.o
+ .debug_loc     0x00000000     0x1031 HindsightCAN/CANMotorUnit.o
  .debug_aranges
-                0x00000000       0xc0 HindsightCAN/CANMotorUnit.o
- .debug_ranges  0x00000000       0xb0 HindsightCAN/CANMotorUnit.o
- .debug_line    0x00000000      0x3aa HindsightCAN/CANMotorUnit.o
- .debug_str     0x00000000      0x491 HindsightCAN/CANMotorUnit.o
+                0x00000000       0xe0 HindsightCAN/CANMotorUnit.o
+ .debug_ranges  0x00000000       0xd0 HindsightCAN/CANMotorUnit.o
+ .debug_line    0x00000000      0x454 HindsightCAN/CANMotorUnit.o
+ .debug_str     0x00000000      0x52e HindsightCAN/CANMotorUnit.o
  .comment       0x00000000       0x31 HindsightCAN/CANMotorUnit.o
- .debug_frame   0x00000000      0x2ac HindsightCAN/CANMotorUnit.o
+ .debug_frame   0x00000000      0x2f4 HindsightCAN/CANMotorUnit.o
  .text          0x00000000        0x0 HindsightCAN/CANPacket.o
  .data          0x00000000        0x0 HindsightCAN/CANPacket.o
  .bss           0x00000000        0x0 HindsightCAN/CANPacket.o

@@ -6332,7 +6332,7 @@ void handle_CAN_packet(CANPacket *packet){
     308a:	7d d3       	rcall	.+1786   	; 0x3786 <set_motor_power>
 			break;
     308c:	26 c0       	rjmp	.+76     	; 0x30da <handle_CAN_packet+0x88>
-		case ID_MOTOR_UNIT_SERVO_SET: ;
+		case ID_SCIENCE_SERVO_SET: ;
 			uint8_t servo = GetScienceServoIDFromPacket(packet);
     308e:	ce 01       	movw	r24, r28
     3090:	ec d0       	rcall	.+472    	; 0x326a <GetScienceServoIDFromPacket>
@@ -10405,10 +10405,10 @@ uint16_t read_uv_sensor(){
 00004704 <srand>:
     4704:	a0 e0       	ldi	r26, 0x00	; 0
     4706:	b0 e0       	ldi	r27, 0x00	; 0
-    4708:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-    470c:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_start+0x1>
-    4710:	a0 93 02 01 	sts	0x0102, r26	; 0x800102 <__data_start+0x2>
-    4714:	b0 93 03 01 	sts	0x0103, r27	; 0x800103 <__data_start+0x3>
+    4708:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+    470c:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
+    4710:	a0 93 02 01 	sts	0x0102, r26	; 0x800102 <__DATA_REGION_ORIGIN__+0x2>
+    4714:	b0 93 03 01 	sts	0x0103, r27	; 0x800103 <__DATA_REGION_ORIGIN__+0x3>
     4718:	08 95       	ret
 
 0000471a <memcpy>:

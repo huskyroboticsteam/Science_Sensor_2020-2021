@@ -58,7 +58,7 @@ void handle_CAN_packet(CANPacket *packet){
 			int16_t pwm = GetScienceMotorPWMFromPacket(packet);
 			set_motor_power(motor, pwm);
 			break;
-		case ID_MOTOR_UNIT_SERVO_SET: ;
+		case ID_SCIENCE_SERVO_SET: ;
 			uint8_t servo = GetScienceServoIDFromPacket(packet);
 			uint8_t angle = GetScienceServoAngleFromPacket(packet);
 			set_servo_position(servo, angle);
