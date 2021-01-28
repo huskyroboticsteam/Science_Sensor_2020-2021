@@ -9,6 +9,7 @@
 #include "timers.h"
 #include "usart.h"
 #include "led.h"
+#include <stdlib.h>
 #include <util/delay.h>
 #include <inttypes.h>
 #include <avr/pgmspace.h>

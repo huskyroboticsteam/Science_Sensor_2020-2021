@@ -100,7 +100,7 @@ void motor_control_tick(){
 			set_motor_direction(motor, 0);
 		}
 		if(motor_leds){
-			set_RGB_LED(motor, 0, power / 4, 0);
+			set_RGB_LED(motor, 0, power / 16, 0);
 		}
 		write_PWM(motor + 3, power);
 	}

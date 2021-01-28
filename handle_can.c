@@ -41,9 +41,14 @@ void handle_telemetry_packet(CANPacket *packet){
 		default:
 			set_LED(LED_ERR, 3);
 			update_LEDS(get_mS()/40);
+			set_LED(LED_ERR, 0);
 	}
 	AssembleTelemetryReportPacket(&new_packet, target_group, target_serial, type, sensor_val);
-	SendCANPacket(&new_packet);
+	if(SendCANPacket(&new_packet)){
+		set_LED(LED_ERR, 3);
+		update_LEDS(get_mS()/40);
+		set_LED(LED_ERR, 0);
+	}
 }
 
 void handle_CAN_packet(CANPacket *packet){
